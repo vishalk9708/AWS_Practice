@@ -4,6 +4,7 @@ import UserPool from '../UserPool';
 import React,{useState} from 'react';
 import './Login.css'
 import Signup from './Signup';
+import {Link} from 'react-router-dom';
 
 function Login() {
     const [email,setEmail]=useState();
@@ -56,7 +57,7 @@ function Login() {
                 Login
             </Button></center>
             <br/>
-            <center><a href={Signup}><p>Don't have an account? SignUp</p></a></center>
+            <center><Link to='/signup'><p>Don't have an account? SignUp</p></Link></center>
         </Form>
     </div>
    )

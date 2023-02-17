@@ -1,8 +1,10 @@
 import {Button, Form} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import './Signup.css'
 import React,{useState} from 'react';
 import UserPool from '../UserPool';
 import Login from './Login';
+import { Route } from 'react-router-dom';
 
 function Signup() {
     const [email,setEmail]=useState();
@@ -43,7 +45,7 @@ function Signup() {
                 Signup
             </Button></center>
             <br/>
-            <center> <a href={Login}><p>Already have an account? Login</p></a></center>
+            <center> <Link to='/login'><p>Already have an account? Login</p></Link></center>
         </Form>
        
     </div>
