@@ -1,4 +1,5 @@
 const AwsConfig = require('../aws-config');
+const CognitoIdentity= require("@aws-sdk/client-cognito-identity");
 function signUp(email, password, agent = 'none') {
     return new Promise((resolve) => {
         AwsConfig.initAWS ();

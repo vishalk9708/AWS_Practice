@@ -1,5 +1,5 @@
 'use strict';
-global.fetch = require('node-fetch')
+// global.fetch = require('node-fetch')
 require('dotenv').config();
 const Cognito = require('./cognito/index');
 
