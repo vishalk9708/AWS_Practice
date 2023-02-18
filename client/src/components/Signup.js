@@ -3,9 +3,6 @@ import {Link} from 'react-router-dom';
 import './Signup.css'
 import React,{useState} from 'react';
 import UserPool from '../UserPool';
-import Login from './Login';
-import { Route } from 'react-router-dom';
-
 function Signup() {
     const [email,setEmail]=useState();
     // const [name,setName]=useState();
@@ -19,7 +16,9 @@ function Signup() {
         console.log(err);
         return;
         }
+        else{
         console.log(data);
+        }
       })
     };
 

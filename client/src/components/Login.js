@@ -3,12 +3,12 @@ import {Button, Form} from 'react-bootstrap';
 import UserPool from '../UserPool';
 import React,{useState} from 'react';
 import './Login.css'
-import Signup from './Signup';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 
 function Login() {
     const [email,setEmail]=useState();
     const [password,setPassword]=useState();
+    const navigate=useNavigate();
     const onSubmit=(e)=>{
         e.preventDefault();
         
@@ -23,6 +23,7 @@ function Login() {
         user.authenticateUser(AuthDetails,{
             onSuccess:(data)=>{
                 console.log("onSuccess",data)
+                navigate('/profileDetails')
             },
             onFailure:(err)=>{
                 console.error("onFailure",err)
@@ -35,7 +36,7 @@ function Login() {
       };
    return (
     <div className="login">
-      <center><h1>AWS Practice</h1></center>
+      <center><h1>AWS Practice Login</h1></center>
       <br/><br/>
         <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
