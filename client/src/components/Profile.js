@@ -17,7 +17,10 @@ const Profile=({ handleImages })=>{
   const uploadFiles=(e)=>{
     e.preventDefault();
     S3FileUpload.uploadFile(file, config)
-    .then((data) => console.log(data))
+    .then((data) => 
+    {console.log(data);
+     alert("Your image has been uploaded to s3")
+    })
     .catch((err) => console.error(err))
   }
   return (
