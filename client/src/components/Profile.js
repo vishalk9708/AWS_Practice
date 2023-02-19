@@ -2,8 +2,24 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import {React,useState} from 'react';
 import './profile.css'
-function Profile() {
+import S3FileUpload from 'react-s3';
+window.Buffer = window.Buffer || require("buffer").Buffer;
+const config = {
+    bucketName: 'awspract101',
+    region: 'us-east-1',
+    accessKeyId: 'AKIARG6P3RWPCEDEYFPO',
+    secretAccessKey: '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',
+} 
+const Profile=({ handleImages })=>{
+  const [file,setFile]=useState();
+  const uploadFiles=(e)=>{
+    e.preventDefault();
+    S3FileUpload.uploadFile(file, config)
+    .then((data) => console.log(data))
+    .catch((err) => console.error(err))
+  }
   return (
     <div className="profile">
       <center><h1 style={{fontFamily:"fantasy"}}>Profile Details</h1></center>
@@ -24,10 +40,10 @@ function Profile() {
         <br/>
         <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Please upload your profile image</Form.Label>
-        <Form.Control type="file" />
+        <Form.Control type="file" name="images" onChange={(e)=>setFile(e.target.files[0])}  />
       </Form.Group>
       <br/>
-      <center><Button variant="primary" type="submit">
+      <center><Button variant="primary" type="submit" onClick={uploadFiles}>
         Submit
       </Button></center>
       
