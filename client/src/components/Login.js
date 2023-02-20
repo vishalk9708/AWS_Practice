@@ -25,6 +25,7 @@ function Login() {
         user.authenticateUser(AuthDetails,{
             onSuccess:(data)=>{
                 console.log("onSuccess",data)
+                alert("Login Successful")
                 navigate('/profileDetails')
             },
             onFailure:(err)=>{

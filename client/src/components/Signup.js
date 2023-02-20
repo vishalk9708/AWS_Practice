@@ -1,13 +1,12 @@
 import {Button, Form} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './Signup.css'
 import React,{useState} from 'react';
 import UserPool from '../UserPool';
 function Signup() {
     const [email,setEmail]=useState();
-    // const [name,setName]=useState();
-    // const [phone_number,setPhone]=useState();
     const [password,setPassword]=useState();
+    const navigate=useNavigate();
     const onSubmit=(e)=>{
       e.preventDefault();
 
@@ -18,6 +17,8 @@ function Signup() {
         }
         else{
         console.log(data);
+        alert("Account Created!, Please login to continue")
+        navigate('/login')
         }
       })
     };
