@@ -4,6 +4,9 @@ import './Signup.css'
 import React,{useState} from 'react';
 import UserPool from '../UserPool';
 import kfintech from '../img/kfintech.png'
+import swal from 'sweetalert';
+import userData from '../utils/getMetaData';
+import Profile from './Profile'
 
 function Signup() {
     const [email,setEmail]=useState();
@@ -14,17 +17,18 @@ function Signup() {
 
       UserPool.signUp(email,password,[],null,(err,data)=>{
         if(err){
+          swal("", `${err.message}`, "warning")
         console.log(err);
         return;
         }
         else{
         console.log(data);
-        alert("Account Created!, Please login to continue")
+        swal("Account Created!", "Please login to continue", "success")
         navigate('/login')
         }
       })
     };
-
+  if(userData.isLoggedIn === false){
    return (
     <div>
     <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -58,7 +62,15 @@ function Signup() {
        
     </div>
     </div>
-   )
+   )}
+   else {
+    return (
+      <>
+        <Profile/>
+        skgvjjdkv
+      </>
+    )
+   }
 }
 
 export default Signup;

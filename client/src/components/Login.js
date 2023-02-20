@@ -3,14 +3,14 @@ import {Button, Form} from 'react-bootstrap';
 import UserPool from '../UserPool';
 import React,{useState} from 'react';
 import './Login.css'
-import {Link,useNavigate} from 'react-router-dom';
+import {Link,redirect,useNavigate} from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
-
+import userData from '../utils/getMetaData'
 
 function Login() {
-    const [email,setEmail]=useState();
-    const [password,setPassword]=useState();
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("")
     const navigate=useNavigate();
     const onSubmit=(e)=>{
         e.preventDefault();
@@ -23,9 +23,16 @@ function Login() {
             email: email,
             Password: password
         })
+
+       
         user.authenticateUser(AuthDetails,{
             onSuccess:(data)=>{
-                console.log("onSuccess",data)
+                userData.email = email
+                userData.isLoggedIn = true
+                userData.name = email.split("@")[0];
+                // userData.token = AuthDetails
+                console.log(userData);
+                localStorage.setItem('data', userData)
                 swal("Login Successful", "", "success");
                 navigate('/profileDetails')
             },
@@ -53,7 +60,7 @@ function Login() {
         <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                <Form.Control type="email" placeholder="Enter email" value={email}  autoSave='off' onChange={(e)=>setEmail(e.target.value)}/>
                 <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
                 </Form.Text>

@@ -16,8 +16,6 @@ const decrypt = (myData) => {
 function getSessionData(option = 0) {
   let sessionData = {
     isLoggedIn: false,
-    firstName: " ",
-    lastName: " ",
     email: " ",
     token: " "
   };
