@@ -11,7 +11,7 @@ const Home=()=>{
             <li style={{float:"right"}}><Link to="/login">Login</Link></li>
             <li style={{float:"right"}}><Link to="/signup">Signup</Link></li>
         </ul>
-        <img src={image} style={{width:"100%",height:"100%"}}/>
+        <img src={image} style={{width:"100%",height:"100%", marginTop: "1px"}}/>
         </div>
     )
 }

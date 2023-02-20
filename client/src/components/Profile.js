@@ -1,17 +1,17 @@
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+import {Col, Form, Row, Button} from 'react-bootstrap'
 import {React,useState} from 'react';
 import './profile.css'
 import S3FileUpload from 'react-s3';
 import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert'
+import kfintech from '../img/kfintech.png'
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const config = {
-    bucketName: 'awspract101',
-    region: 'us-east-1',
-    accessKeyId: 'AKIARG6P3RWPJR2LXGMP',
-    secretAccessKey: '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',
+  bucketName: 'myawsbucket9708',
+  region: 'us-east-1',
+  accessKeyId: 'AKIASS455I4ZTFT24HNY',
+  secretAccessKey: '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',
 } 
 const Profile=({ handleImages })=>{
   const navigate=useNavigate();
@@ -22,26 +22,35 @@ const Profile=({ handleImages })=>{
     .then((data) => 
     {
      console.log(data);
-     alert("Your image has been uploaded to s3")
+     swal("", "User created Successfully", "success");
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.error(err)
+      swal("", `${err.message}`, "warning");
+    })
+
   }
   const handleLogout=()=>{
       console.clear();
+      swal("", "Logout successfully", "success");
+
       localStorage.clear();
       navigate('/')
 
   }
   return (
-    <>
-    <div style={{marginTop:"-2%"}}>
-    <Button onClick={handleLogout} style={{float:"right",textDecoration:"none"}}>SignOut</Button>
-    </div>
+    <div>
+   <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
+            <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
+            <li style={{float:"right", margin: "7px"}} onClick={handleLogout}><Link>Logout</Link></li>
+            <li style={{float:"right", margin: "7px"}}><Link to="/users">Users</Link></li>
+
+    </ul>
     <div className="profile">
       <center><h1 style={{fontFamily:"fantasy"}}>Profile Details</h1></center>
       <br/><br/>
     <Form>
-      <Form.Label>Full Name:</Form.Label>
+      <Form.Label>Full Name:</Form.Label> 
       <Row>
         <Col>
           <Form.Control placeholder="First name" />
@@ -68,7 +77,7 @@ const Profile=({ handleImages })=>{
     <div className='details'>
      
     </div>
-    </>
+    </div>
   );
 }
 

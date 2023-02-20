@@ -3,6 +3,8 @@ import {Link, useNavigate} from 'react-router-dom';
 import './Signup.css'
 import React,{useState} from 'react';
 import UserPool from '../UserPool';
+import kfintech from '../img/kfintech.png'
+
 function Signup() {
     const [email,setEmail]=useState();
     const [password,setPassword]=useState();
@@ -24,6 +26,12 @@ function Signup() {
     };
 
    return (
+    <div>
+    <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
+            <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
+            <li style={{float:"right"}}><Link to="/login">Login</Link></li>
+            <li style={{float:"right"}}><Link to="/signup">Signup</Link></li>
+    </ul>
     <div className="signup">
       <center><h1>AWS Practice Signup</h1></center>
       <br/><br/>
@@ -48,6 +56,7 @@ function Signup() {
             <center> <Link to='/login'><p>Already have an account? Login</p></Link></center>
         </Form>
        
+    </div>
     </div>
    )
 }

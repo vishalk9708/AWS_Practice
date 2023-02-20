@@ -4,7 +4,8 @@ import UserPool from '../UserPool';
 import React,{useState} from 'react';
 import './Login.css'
 import {Link,useNavigate} from 'react-router-dom';
-
+import swal from 'sweetalert'
+import kfintech from '../img/kfintech.png'
 
 
 function Login() {
@@ -25,11 +26,13 @@ function Login() {
         user.authenticateUser(AuthDetails,{
             onSuccess:(data)=>{
                 console.log("onSuccess",data)
-                alert("Login Successful")
+                swal("Login Successful", "", "success");
                 navigate('/profileDetails')
             },
             onFailure:(err)=>{
                 console.error("onFailure",err)
+                swal("", `${err.message}`, "success");
+
             },
             newPasswordRequired:(data)=>{
                 console.log("newPasswordReq",data);
@@ -38,6 +41,12 @@ function Login() {
         
       };
    return (
+    <div>
+    <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
+            <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
+            <li style={{float:"right"}}><Link to="/login">Login</Link></li>
+            <li style={{float:"right"}}><Link to="/signup">Signup</Link></li>
+        </ul>
     <div className="login">
       <center><h1>AWS Practice Login</h1></center>
       <br/><br/>
@@ -63,6 +72,7 @@ function Login() {
             <br/>
             <center><Link to='/signup'><p>Don't have an account? SignUp</p></Link></center>
         </Form>
+    </div>
     </div>
    )
 }

@@ -4,6 +4,8 @@ import Profile from './components/Profile'
 import Logout from './components/Logout'
 import Signup from './components/Signup';
 import Home from './components/Home'
+import Users from './components/Users';
+
 function App() {
   return (
     <>
@@ -14,6 +16,7 @@ function App() {
             <Route path="/login" element={<Login />}/>
             <Route path="/profileDetails" element={<Profile />} />
             <Route path="/logout" element={<Logout/>}/>
+            <Route path='/users' element={<Users/>}/>
         </Routes>
     </BrowserRouter>
     </>
