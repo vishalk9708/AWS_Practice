@@ -3,10 +3,11 @@ import {Button, Form} from 'react-bootstrap';
 import UserPool from '../UserPool';
 import React,{useState} from 'react';
 import './Login.css'
-import {Link,redirect,useNavigate} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
 import userData from '../utils/getMetaData'
+import setSessionData from '../utils/setSessionData';
 
 function Login() {
     const [email,setEmail]=useState("");
@@ -31,8 +32,10 @@ function Login() {
                 userData.isLoggedIn = true
                 userData.name = email.split("@")[0];
                 // userData.token = AuthDetails
+                
+                setSessionData(userData);
                 console.log(userData);
-                localStorage.setItem('data', userData)
+
                 swal("Login Successful", "", "success");
                 navigate('/profileDetails')
             },

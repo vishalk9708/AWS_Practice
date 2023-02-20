@@ -16,12 +16,13 @@ const decrypt = (myData) => {
 function getSessionData(option = 0) {
   let sessionData = {
     isLoggedIn: false,
-    email: " ",
-    token: " "
+    name: "",
+    email: "",
+    token: ""
   };
 
   var endata = localStorage.getItem("data");
-
+  
   if (endata) sessionData = JSON.parse(endata);
 
   return sessionData;

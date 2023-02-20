@@ -5,9 +5,7 @@ const encrypt = (myData) =>
 
 function setSessionData(data, option = 0) {
   var dataString = JSON.stringify(data);
-
   var endata = dataString;
-
   localStorage.setItem("data", endata);
 
   return true;
