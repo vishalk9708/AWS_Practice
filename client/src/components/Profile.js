@@ -10,21 +10,31 @@ import Login from './Login';
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const config = {
-  bucketName: 'myawsbucket9708',
+  bucketName: 'awspract101',
   region: 'us-east-1',
-  accessKeyId: 'AKIASS455I4ZTFT24HNY',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIARG6P3RWPKXR3FWCW',
+  secretAccessKey: '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',
 } 
 const Profile=({ handleImages })=>{
   const navigate=useNavigate();
   const [file,setFile]=useState();
+  const [firstName,setfirstName]=useState();
+  const [lastName,setlastName]=useState();
+  const [companyName,setcompanyName]=useState();
+  const [imgUrl,setimgUrl]=useState();
+  const handleData=(e)=>{
+    e.preventDefault();
+    
+  }
   const uploadFiles=(e)=>{
     e.preventDefault();
     S3FileUpload.uploadFile(file, config)
     .then((data) => 
     {
      console.log(data);
-     swal("", "User created Successfully", "success");
+     setimgUrl(data.location)
+     swal("", "Image uploaded Successfully", "success");
+
     })
     .catch((err) => {
       console.error(err)
@@ -59,22 +69,22 @@ const Profile=({ handleImages })=>{
         <Form.Label>Full Name:</Form.Label> 
         <Row>
           <Col>
-            <Form.Control placeholder="First name"/>
+            <Form.Control placeholder="First name" value={firstName} onChange={(e)=>{setfirstName(e.target.value)}}/>
           </Col>
           <Col>
-            <Form.Control placeholder="Last name" />
+            <Form.Control placeholder="Last name" value={lastName} onChange={(e)=>{setlastName(e.target.value)}}/>
           </Col>
           </Row>
           <br/>
           <Form.Label>Company:</Form.Label>
-            <Form.Control placeholder="Company Name" />
+            <Form.Control placeholder="Company Name" value={companyName} onChange={(e)=>{setcompanyName(e.target.value)}} />
           <br/>
-          <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Please upload your profile image</Form.Label>
-          <Form.Control type="file" name="images" onChange={(e)=>setFile(e.target.files[0])}  />
-        </Form.Group>
+        <form>
+        <input type="file" id="myFile" name="filename" onChange={(e)=>setFile(e.target.files[0])}/>
+        <button type="submit"  onClick={uploadFiles}>Upload</button>
+        </form>
         <br/>
-        <center><Button variant="primary" type="submit" onClick={uploadFiles}>
+        <center><Button variant="primary" type="submit" onClick={handleData}>
           Submit
         </Button></center>
         
