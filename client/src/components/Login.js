@@ -41,7 +41,7 @@ function Login() {
             },
             onFailure:(err)=>{
                 console.error("onFailure",err)
-                swal("", `${err.message}`, "success");
+                swal("", `${err.message}`, "warning");
 
             },
             newPasswordRequired:(data)=>{

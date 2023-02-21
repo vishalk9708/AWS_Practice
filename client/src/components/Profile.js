@@ -9,12 +9,12 @@ import userData from '../utils/getMetaData';
 import Login from './Login';
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
-const config = {
-  bucketName: 'awspract101',
-  region: 'us-east-1',
-  accessKeyId: 'AKIARG6P3RWPKXR3FWCW',
-  secretAccessKey: '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',
-} 
+// const config = {
+//   bucketName: 'myawsbucket9708',
+//   region: 'us-east-1',
+//   accessKeyId: 'AKIASS455I4ZTFT24HNY',
+//   secretAccessKey: '7620bh338hnpdaff3m05n7f7gj',
+// } 
 const Profile=({ handleImages })=>{
   const navigate=useNavigate();
   const [file,setFile]=useState();
