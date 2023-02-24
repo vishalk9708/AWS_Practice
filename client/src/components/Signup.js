@@ -7,15 +7,48 @@ import kfintech from '../img/kfintech.png'
 import swal from 'sweetalert';
 import userData from '../utils/getMetaData';
 import Profile from './Profile'
+import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
 function Signup() {
     const [email,setEmail]=useState();
     const [password,setPassword]=useState();
+    const [name,setName]=useState();
+    const [number,setNumber]=useState();
     const navigate=useNavigate();
+    var attributeList = [];
+
+    const randomId = function(length) {
+      return Math.random().toString(36).substring(2, length+2);
+    };
+
+var dataName = {
+    Name : 'name',
+    Value : name
+};
+
+var dataPhoneNumber = {
+    Name : 'phone_number',
+    Value : number
+};
+var dataUserPool = {
+    Name : 'custom:userPoolId',
+    Value : 'bcab72e'
+};
+var dataTenant ={
+  Name: 'custom:tenantId',
+  Value: randomId(10)
+}
+var attributeName = new CognitoUserAttribute(dataName);
+var attributePhoneNumber = new CognitoUserAttribute(dataPhoneNumber);
+var attributeUserPool = new CognitoUserAttribute(dataUserPool);
+var attributeTanent = new CognitoUserAttribute(dataTenant);
+attributeList.push(attributeName);
+attributeList.push(attributePhoneNumber);
+attributeList.push(attributeTanent);
+attributeList.push(attributeUserPool);
     const onSubmit=(e)=>{
       e.preventDefault();
-
-      UserPool.signUp(email,password,[],null,(err,data)=>{
+      UserPool.signUp(email,password,attributeList,null,(err,data)=>{
         if(err){
           swal("", `${err.message}`, "warning")
         console.log(err);
@@ -24,11 +57,12 @@ function Signup() {
         else{
         console.log(data);
         swal("Account Created!", "Please login to continue", "success")
-        navigate('/login')
+        
+        // navigate('/login')
+        navigate('/otpverification')
         }
       })
     };
-  if(userData.isLoggedIn === false){
    return (
     <div>
     <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -37,9 +71,21 @@ function Signup() {
             <li style={{float:"right"}}><Link to="/signup">Signup</Link></li>
     </ul>
     <div className="signup">
-      <center><h1>AWS Practice Signup</h1></center>
+      <center><h1>Create Tenant Admin</h1></center>
       <br/><br/>
         <Form onSubmit={onSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Tenant Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter Name" value={name} onChange={(e)=>setName(e.target.value)}/>
+                <Form.Text className="text-muted">
+                </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Tenant Mobile Number</Form.Label>
+                <Form.Control type="text" placeholder="Enter Phone Number" value={number} onChange={(e)=>setNumber(e.target.value)}/>
+                <Form.Text className="text-muted">
+                </Form.Text>
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
@@ -62,15 +108,7 @@ function Signup() {
        
     </div>
     </div>
-   )}
-   else {
-    return (
-      <>
-        <Profile/>
-        skgvjjdkv
-      </>
-    )
-   }
+   )
 }
 
 export default Signup;

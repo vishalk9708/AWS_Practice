@@ -1,22 +1,22 @@
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import {Button, Form} from 'react-bootstrap';
-import UserPool from '../UserPool';
+import UserPool2 from '../UserPool2';
 import React,{useState} from 'react';
 import './Login.css'
 import {Link,useNavigate} from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
-
-function Login() {
+function UserLogin() {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("")
     const navigate=useNavigate();
     const onSubmit=(e)=>{
+
         e.preventDefault();
-        
+        localStorage.setItem("email",email)
         const user=new CognitoUser({
             Username: email,
-            Pool: UserPool
+            Pool: UserPool2
         })
         const AuthDetails= new AuthenticationDetails({
             email: email,
@@ -28,13 +28,17 @@ function Login() {
                 console.log(data)
                 console.log("success")
                 swal("Login Successful", "", "success");
-                var id=data.idtoken.payload.tanentId;
-                localStorage.setItem("tanentId",id)
-                navigate('/createuser')
+                
             },
             onFailure:(err)=>{
+                if(err.message==="User is not confirmed.")
+                {
+                navigate('/otpverification')
+                }
+                else{
                 console.error("onFailure",err)
                 swal("", `${err.message}`, "success");
+                }
 
             },
             newPasswordRequired:(data)=>{
@@ -45,13 +49,8 @@ function Login() {
       };
    return (
     <div>
-    <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
-            <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
-            <li style={{float:"right"}}><Link to="/login">Login</Link></li>
-            <li style={{float:"right"}}><Link to="/signup">Signup</Link></li>
-        </ul>
     <div className="login">
-      <center><h1>Tenant Admin Login</h1></center>
+      <center><h1>User Login</h1></center>
       <br/><br/>
         <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -73,11 +72,10 @@ function Login() {
                 Login
             </Button></center>
             <br/>
-            <center><Link to='/signup'><p>Don't have an account? SignUp</p></Link></center>
         </Form>
     </div>
     </div>
    )
 }
 
-export default Login;
+export default UserLogin;
