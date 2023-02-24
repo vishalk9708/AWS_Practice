@@ -13,8 +13,8 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 const config = {
   bucketName: 'awspract101',
   region: 'us-east-1',
-  accessKeyId: 'AKIARG6P3RWPKXR3FWCW',
-  secretAccessKey: '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',
+  accessKeyId: 'xxxxxx',
+  secretAccessKey: 'xxxxxxx',
 } 
 const Profile=({ handleImages })=>{
   const navigate=useNavigate();
