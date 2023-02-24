@@ -5,8 +5,8 @@ import S3FileUpload from 'react-s3';
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
-import Login from './Login';
-import UserPool2 from '../UserPool2';
+import Login from './Adminlogin';
+import UserPool from '../UserPool';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -30,32 +30,40 @@ const Profile=({ handleImages })=>{
   };
   var attributeList = [];
   var dataName = {
-      Name : 'name',
-      Value : name
-  };
+    Name : 'name',
+    Value : name
+};
 
-  var dataPhoneNumber = {
-      Name : 'phone_number',
-      Value : number
-  };
-  var dataTanent ={
-    Name: 'custom:tanentId',
-    Value: randomId(7)
-  }
-  var datacount={
-    Name: 'custom:logincount',
-    Value: logincount
-  }
-  var attributeName = new CognitoUserAttribute(dataName);
-  var attributePhoneNumber = new CognitoUserAttribute(dataPhoneNumber);
-  var attributeTanent = new CognitoUserAttribute(dataTanent);
-  attributeList.push(attributeName);
-  attributeList.push(attributePhoneNumber);
-  attributeList.push(attributeTanent);
+var dataPhoneNumber = {
+    Name : 'phone_number',
+    Value : number
+};
+var dataUserPool = {
+    Name : 'custom:userPoolId',
+    Value : 'bcab72e'
+};
+var dataTenant ={
+  Name: 'custom:tenantId',
+  Value: randomId(10)
+}
+var dataProfile ={
+  Name: 'profile',
+  Value: "User"
+}
+var attributeName = new CognitoUserAttribute(dataName);
+var attributePhoneNumber = new CognitoUserAttribute(dataPhoneNumber);
+var attributeUserPool = new CognitoUserAttribute(dataUserPool);
+var attributeTanent = new CognitoUserAttribute(dataTenant);
+var attributeProfile=new CognitoUserAttribute(dataProfile)
+attributeList.push(attributeName);
+attributeList.push(attributePhoneNumber);
+attributeList.push(attributeTanent);
+attributeList.push(attributeUserPool);
+attributeList.push(attributeProfile)
 
 const onSubmit=(e)=>{
   e.preventDefault();
-  UserPool2.signUp(email,password,attributeList,null,(err,data)=>{
+  UserPool.signUp(email,password,attributeList,null,(err,data)=>{
     if(err){
       swal("", `${err.message}`, "warning")
     console.log(err);
@@ -88,7 +96,7 @@ const onSubmit=(e)=>{
       console.clear();
       swal("", "Logout successfully", "success");
       localStorage.clear();
-      navigate('/login')
+      navigate('/Adminlogin')
   }
     return (
       <div>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form,Button } from "react-bootstrap";
 import UserPool from "../UserPool";
-import { AuthenticationDetails, CognitoUser,Cog } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import './Login.css'
 import { useNavigate } from "react-router-dom";
-const Otp=()=>{
+const Otpv=()=>{
    const navigate=useNavigate();
    const [num,setNum]=useState();
    var userData = {
@@ -22,7 +22,7 @@ cognitoUser.confirmRegistration(num, true, function(err, result) {
 	}
     else{
 	console.log("Otp verified");
-    navigate('/userlogin')
+    navigate('/Adminlogin')
     }
 });
 }
@@ -45,4 +45,4 @@ cognitoUser.confirmRegistration(num, true, function(err, result) {
     </div>
    )
 }
-export default Otp
+export default Otpv

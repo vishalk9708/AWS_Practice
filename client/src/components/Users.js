@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 import swal from "sweetalert";
 import kfintech from '../img/kfintech.png'
 import userData from "../utils/getMetaData";
-import Login from "./Login";
+import Login from "./Adminlogin";
 // import { CognitoIdentityProviderClient,ListUsersCommand } from "amazon-cognito-identity-js";
 const Users=()=>{
 const navigate=useNavigate();
@@ -28,10 +28,8 @@ const navigate=useNavigate();
 const handleLogout=()=>{
     swal("", "successfully logged out", "success")
     console.clear();
-    userData.isLoggedIn = false;
-    userData.email = null
     localStorage.clear();
-     navigate('/')
+     navigate('/Adminlogin')
 }
  return(
      <>

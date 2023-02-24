@@ -38,14 +38,20 @@ var dataTenant ={
   Name: 'custom:tenantId',
   Value: randomId(10)
 }
+var dataProfile ={
+  Name: 'profile',
+  Value: "Admin"
+}
 var attributeName = new CognitoUserAttribute(dataName);
 var attributePhoneNumber = new CognitoUserAttribute(dataPhoneNumber);
 var attributeUserPool = new CognitoUserAttribute(dataUserPool);
 var attributeTanent = new CognitoUserAttribute(dataTenant);
+var attributeProfile=new CognitoUserAttribute(dataProfile)
 attributeList.push(attributeName);
 attributeList.push(attributePhoneNumber);
 attributeList.push(attributeTanent);
 attributeList.push(attributeUserPool);
+attributeList.push(attributeProfile)
     const onSubmit=(e)=>{
       e.preventDefault();
       UserPool.signUp(email,password,attributeList,null,(err,data)=>{
@@ -57,9 +63,7 @@ attributeList.push(attributeUserPool);
         else{
         console.log(data);
         swal("Account Created!", "Please login to continue", "success")
-        
         // navigate('/login')
-        navigate('/otpverification')
         }
       })
     };
@@ -67,8 +71,7 @@ attributeList.push(attributeUserPool);
     <div>
     <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
             <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
-            <li style={{float:"right"}}><Link to="/login">Login</Link></li>
-            <li style={{float:"right"}}><Link to="/signup">Signup</Link></li>
+            <li style={{float:"right"}}><Link to="/saaslogin">Logout</Link></li>
     </ul>
     <div className="signup">
       <center><h1>Create Tenant Admin</h1></center>
@@ -100,10 +103,9 @@ attributeList.push(attributeUserPool);
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
             <center><Button variant="primary" type="submit" >
-                Signup
+                Create Tenant
             </Button></center>
             <br/>
-            <center> <Link to='/login'><p>Already have an account? Login</p></Link></center>
         </Form>
        
     </div>
