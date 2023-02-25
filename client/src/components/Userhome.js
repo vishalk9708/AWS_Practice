@@ -10,7 +10,7 @@ const Userhome=(e)=>{
       console.clear();
       swal("", "Logout successfully", "success");
       localStorage.clear();
-      navigate('/userlogin')
+      navigate('/login')
     }
     return(
         <div>

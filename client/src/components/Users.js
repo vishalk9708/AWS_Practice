@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 import swal from "sweetalert";
 import kfintech from '../img/kfintech.png'
 import userData from "../utils/getMetaData";
-import Login from "./Adminlogin";
+import Login from "./Login";
 // import { CognitoIdentityProviderClient,ListUsersCommand } from "amazon-cognito-identity-js";
 const Users=()=>{
 const navigate=useNavigate();

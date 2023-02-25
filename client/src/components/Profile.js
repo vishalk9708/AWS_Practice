@@ -5,7 +5,7 @@ import S3FileUpload from 'react-s3';
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
-import Login from './Adminlogin';
+import Login from './Login';
 import UserPool from '../UserPool';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
@@ -44,7 +44,7 @@ var dataUserPool = {
 };
 var dataTenant ={
   Name: 'custom:tenantId',
-  Value: randomId(10)
+  Value: localStorage.getItem('tenant')
 }
 var dataProfile ={
   Name: 'profile',
@@ -96,7 +96,7 @@ const onSubmit=(e)=>{
       console.clear();
       swal("", "Logout successfully", "success");
       localStorage.clear();
-      navigate('/Adminlogin')
+      navigate('/login')
   }
     return (
       <div>

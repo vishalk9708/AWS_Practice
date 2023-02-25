@@ -71,7 +71,7 @@ attributeList.push(attributeProfile)
     <div>
     <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
             <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
-            <li style={{float:"right"}}><Link to="/saaslogin">Logout</Link></li>
+            <li style={{float:"right"}}><Link to="/login">Logout</Link></li>
     </ul>
     <div className="signup">
       <center><h1>Create Tenant Admin</h1></center>
