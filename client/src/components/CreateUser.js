@@ -81,7 +81,8 @@ const createUser = async() => {
     email: email,
     password: password,
     userPool_id: dataUserPool.Value,
-    tenant_id: dataTenant.Value
+    tenant_id: dataTenant.Value,
+    userType: "user"
   }
 
   await axios.post('http://localhost:8000/api/user', user)

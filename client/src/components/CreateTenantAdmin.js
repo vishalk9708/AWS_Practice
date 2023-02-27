@@ -31,7 +31,7 @@ function CreateTenantAdmin() {
     };
     var dataTenant ={
       Name: 'custom:tenantId',
-      Value: 'tid001'
+      Value: ""
     }
     var dataProfile ={
       Name: 'profile',
@@ -67,17 +67,16 @@ function CreateTenantAdmin() {
 
     // }
     const createTenant = async() => {
-      const tenant = {
+      const user = {
         name: name,
         email: email,
         mobile: number,
         userPool_id: dataUserPool.Value,
         tenant_id: dataTenant.Value,
-        apps: ["DataUtility","Digix"],
-        code: '128'
+        userType: "admin"
       }
     
-      await axios.post('http://localhost:8000/api/tenant', tenant)
+      await axios.post('http://localhost:8000/api/user', user)
            .then((res) => {
                   swal("Tenant account created successfully","", "success")
            })
@@ -100,6 +99,8 @@ function CreateTenantAdmin() {
       <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
             <Link to="/createuser"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
             <li style={{float:"right"}} onClick={handleLogout}><Link>Logout</Link></li>
+            <li style={{float:"right"}}><Link to='/createadmin'>Create Admin</Link></li>
+            <li style={{float:"right"}}><Link to='/onboard'>Onboard Tenant</Link></li>
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
       </ul>
     <div className="signup">

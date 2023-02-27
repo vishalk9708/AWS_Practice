@@ -6,8 +6,8 @@ import Home from './components/Home'
 import GetUsers from './components/GetUsers';
 import GetTenants from './components/GetTenants';
 import Otp from './components/Otp';
-import dotenv from 'dotenv'
-dotenv.config();
+import Createsaasadmin from './components/CreateSaasAdmin';
+import OnboardTanent from './components/OnboardTanent';
 
 function App() {
   return (
@@ -21,6 +21,8 @@ function App() {
             <Route path='/getUsers' element={<GetUsers/>}/>
             <Route path='/GetTenants' element={<GetTenants/>}/>
             <Route path='/otpverification' element={<Otp/>}/>
+            <Route path='/createadmin' element={<Createsaasadmin/>}/>
+            <Route path='/onboard' element={<OnboardTanent/>}/>
         </Routes>
     </BrowserRouter>
     </>

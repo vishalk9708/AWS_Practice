@@ -3,14 +3,14 @@ Description: 'AWS cloudformation stack for userpool,client and table'
 Parameters:
   AuthName:
     Type: String
-    Description: Input tenant Name
+    Description: "Input tenant Name"
 Resources:
   UserPool:
     Type: 'AWS::Cognito::UserPool'
     Properties:
       AccountRecoverySetting:
         RecoveryMechanisms:
-          - verified_email
+          - "verified_email"
       AdminCreateUserConfig:
         AllowAdminCreateUserOnly: true
         InviteMessageTemplate:
@@ -66,7 +66,6 @@ Resources:
         isCfnFunction: true
       GenerateSecret: false
       UserPoolId: !Ref UserPool
-  
 Outputs:
   UserPoolId:
     Value:
@@ -78,4 +77,3 @@ Outputs:
       Ref: UserPoolClient
       Export:
         Name: 'client::id'
-

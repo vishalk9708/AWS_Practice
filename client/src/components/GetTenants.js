@@ -10,7 +10,7 @@ function GetTenants(){
     const navigate=useNavigate();
 
     const getUsers = async() => {
-        await axios.get('http://localhost:8000/api/tenants')
+        await axios.get('http://localhost:8000/api/users')
             .then(async (res) => {
                 setlistTenants(await res.data.data);
             })
@@ -31,6 +31,7 @@ function GetTenants(){
         <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
             <Link to="/createTenantAdmin"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
             <li style={{float:"right"}} onClick={handleLogout}><Link>Logout</Link></li>
+            <li style={{float:"right"}}><Link to='/createadmin'>Create Admin</Link></li>
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
         </ul>
         <br/>
