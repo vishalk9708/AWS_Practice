@@ -41,7 +41,7 @@ function CreateSaaSAdmin() {
    return (
     <div>
       <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
-            <Link to="/createTenantAdmin"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
+            <Link to="/onboard"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
             <li style={{float:"right"}} onClick={handleLogout}><Link>Logout</Link></li>
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
       </ul>

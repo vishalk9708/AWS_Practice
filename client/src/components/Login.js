@@ -41,7 +41,7 @@ function Adminlogin() {
                 }    
                else
                {
-                navigate('/createTenantAdmin')
+                navigate('/onboard')
                 }
                 
             },

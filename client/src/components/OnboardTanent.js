@@ -6,7 +6,7 @@ import kfintech from '../img/kfintech.png'
 import swal from 'sweetalert';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import axios from 'axios';
-
+var randomId = require('random-id');
 function OnboardTanent() {
     const [userpoolid,setuserpoolid]=useState();
     const [app,setApp]=useState([]);
@@ -15,14 +15,14 @@ function OnboardTanent() {
     const [domain,setDomain]=useState();
     const navigate=useNavigate();
 
-    const onSubmit=async (e)=>{
+    const onSubmit=(e)=>{
       e.preventDefault();
    
     const createTenant = async() => {
       const tenant = {
         name: name,
         domain: domain,
-        tenant_id: "12345",
+        tenant_id:randomId(8, 'aA0') ,
         code: code,
         app: ["Digix","DataUtility"],
         userpoolid: "v098h"
@@ -30,16 +30,13 @@ function OnboardTanent() {
       await axios.post('http://localhost:8000/api/tenant', tenant)
            .then((res) => {
                   swal("Tenant account created successfully","", "success")
+                  navigate('/createTenantAdmin')
            })
            .catch((err) => {
                 console.log("error", err);
            })
     }
-    createTenant();
-
-   
-
-    
+    createTenant();  
   }
 
     const handleLogout = async() => {
@@ -51,7 +48,7 @@ function OnboardTanent() {
    return (
     <div>
       <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
-            <Link to="/createuser"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
+            <Link to="/onboard"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
             <li style={{float:"right"}} onClick={handleLogout}><Link>Logout</Link></li>
             <li style={{float:"right"}}><Link to='/createadmin'>Create Admin</Link></li>
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
@@ -68,7 +65,13 @@ function OnboardTanent() {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
                 <Form.Label>Domain Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter Phone Number" value={domain} onChange={(e)=>setDomain(e.target.value)}/>
+                <Form.Control type="text" placeholder="Enter domain" value={domain} onChange={(e)=>setDomain(e.target.value)}/>
+                <Form.Text className="text-muted">
+                </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPhone">
+                <Form.Label>Code</Form.Label>
+                <Form.Control type="text" placeholder="Enter Code" value={code} onChange={(e)=>setCode(e.target.value)}/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>

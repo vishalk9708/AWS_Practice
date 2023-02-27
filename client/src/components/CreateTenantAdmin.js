@@ -100,7 +100,6 @@ function CreateTenantAdmin() {
             <Link to="/createuser"><li ><img src={kfintech} style={{width:"200px",height:'50px',marginTop:"-2%"}}/></li></Link>
             <li style={{float:"right"}} onClick={handleLogout}><Link>Logout</Link></li>
             <li style={{float:"right"}}><Link to='/createadmin'>Create Admin</Link></li>
-            <li style={{float:"right"}}><Link to='/onboard'>Onboard Tenant</Link></li>
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
       </ul>
     <div className="signup">
