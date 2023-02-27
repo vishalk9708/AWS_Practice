@@ -1,6 +1,6 @@
 const AWS = require('@aws-sdk/client-cloudformation')
 const cloudformationTemplate=require('./ResouceStack.yaml')
-var cloudformation = new AWS.CloudFormation({region:"ap-south-1",credentials:{ accessKeyId:"AKIA3S5XP67EYKCKIQNJ", secretAccessKey:"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"}});
+var cloudformation = new AWS.CloudFormation({region:"ap-south-1"});
 
 var params = {
   StackName: "Mynewstack", /* required */
