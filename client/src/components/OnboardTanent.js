@@ -17,17 +17,16 @@ function OnboardTanent() {
 
     const onSubmit=async (e)=>{
       e.preventDefault();
-
+   
     const createTenant = async() => {
       const tenant = {
         name: name,
         domain: domain,
-        tenant_id: Math.floor(Math.random()*Math.pow(10, 8)),
+        tenant_id: "12345",
         code: code,
         app: ["Digix","DataUtility"],
         userpoolid: "v098h"
       }
-    
       await axios.post('http://localhost:8000/api/tenant', tenant)
            .then((res) => {
                   swal("Tenant account created successfully","", "success")
@@ -36,8 +35,9 @@ function OnboardTanent() {
                 console.log("error", err);
            })
     }
+    createTenant();
 
-   await createTenant();
+   
 
     
   }
@@ -59,7 +59,7 @@ function OnboardTanent() {
     <div className="signup">
       <center><h1>Onboard Tenant </h1></center>
       <br/><br/>
-        <Form>
+        <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="formBasicName">
                 <Form.Label>Tenant Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter Name" value={name} onChange={(e)=>setName(e.target.value)}/>
@@ -72,7 +72,7 @@ function OnboardTanent() {
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>
-            <center><Button variant="primary" type="submit" onClick={onSubmit}>
+            <center><Button variant="primary" type="submit" >
                 Create Tenant
             </Button></center>
             <br/>
