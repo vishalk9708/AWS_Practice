@@ -66,29 +66,7 @@ Resources:
         isCfnFunction: true
       GenerateSecret: false
       UserPoolId: !Ref UserPool
-  DBTable:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: email
-          AttributeType: String
-        - AttributeName: phone_number
-          AttributeType: String
-        - AttributeName: name
-          AttributeType: S
-        - AttributeName: password
-          AttributeType: S
-        - AttributeName: tenant_id
-          AttributeType: S
-        - AttributeName: userpool_id
-          AttributeType: S
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-      KeyType:
-        AttributeName: email
-        KeyType: HASH
-      TableName: '{AuthName}-db'
+  
 Outputs:
   UserPoolId:
     Value:
@@ -100,8 +78,4 @@ Outputs:
       Ref: UserPoolClient
       Export:
         Name: 'client::id'
-  DBTableName:
-    Value:
-      Ref: DBTable
-      Export:
-        Name: 'Table::Name'
+

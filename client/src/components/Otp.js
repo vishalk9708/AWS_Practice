@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form,Button } from "react-bootstrap";
-import UserPool from "../UserPool";
+import UserPool from "../Tenant-userPool";
 import { AuthenticationDetails, CognitoUser,Cog } from 'amazon-cognito-identity-js';
 import './Login.css'
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ cognitoUser.confirmRegistration(num, true, function(err, result) {
 	}
     else{
 	console.log("Otp verified");
-    navigate('/userlogin')
+    navigate('/login')
     }
 });
 }

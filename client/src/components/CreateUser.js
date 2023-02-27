@@ -1,33 +1,31 @@
 import {Col, Form, Row, Button} from 'react-bootstrap'
 import {React,useState} from 'react';
-import './profile.css'
-import S3FileUpload from 'react-s3';
+import './createUser.css'
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
-import Login from './Login';
-import UserPool from '../UserPool';
+import UserPool from '../Tenant-userPool';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import axios from 'axios'
+
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
-const config = {
-  bucketName: 'awspract101',
-  region: 'us-east-1',
-  accessKeyId: 'xxxxxx',
-  secretAccessKey: 'xxxxxxx',
-} 
-const Profile=({ handleImages })=>{
+// const config = {
+//   bucketName: 'awspract101',
+//   region: 'us-east-1',
+//   accessKeyId: 'xxxxxx',
+//   secretAccessKey: 'xxxxxxx',
+// } 
+const CreateUser=({ handleImages })=>{
   const navigate=useNavigate();
-  const [file,setFile]=useState();
   const [name,setName]=useState();
-  const [logincount,setLogincount]=useState(0);
-  // const [lastName,setlastName]=useState();
   const [number,setNumber]=useState();
   const [email,setEmail]=useState();
   const [password,setPassword]=useState();
-  const randomId = function(length) {
-    return Math.random().toString(36).substring(2, length+2);
-  };
+  // const randomId = function(length) {
+  //   return Math.random().toString(36).substring(2, length+2);
+  // };
+
   var attributeList = [];
   var dataName = {
     Name : 'name',
@@ -40,7 +38,7 @@ var dataPhoneNumber = {
 };
 var dataUserPool = {
     Name : 'custom:userPoolId',
-    Value : 'bcab72e'
+    Value : 'uid002'
 };
 var dataTenant ={
   Name: 'custom:tenantId',
@@ -61,20 +59,39 @@ attributeList.push(attributeTanent);
 attributeList.push(attributeUserPool);
 attributeList.push(attributeProfile)
 
-const onSubmit=(e)=>{
+const onSubmit= (e)=>{
   e.preventDefault();
   UserPool.signUp(email,password,attributeList,null,(err,data)=>{
     if(err){
       swal("", `${err.message}`, "warning")
-    console.log(err);
-    return;
+      console.log(err);
+      return;
     }
     else{
-    console.log(data);
-    swal("User Created","", "success")
+        swal("", "user created in userPool", "success")
+        createUser();
     }
   })
 };
+
+const createUser = async() => {
+  const user = {
+    name: name,
+    mobile: number,
+    email: email,
+    password: password,
+    userPool_id: dataUserPool.Value,
+    tenant_id: dataTenant.Value
+  }
+
+  await axios.post('http://localhost:8000/api/user', user)
+       .then((res) => {
+              swal("User Created in dynamo table","", "success")
+       })
+       .catch((err) => {
+            console.log("error", err);
+       })
+}
   // const uploadFiles=(e)=>{
   //   e.preventDefault();
   //   S3FileUpload.uploadFile(file, config)
@@ -103,7 +120,7 @@ const onSubmit=(e)=>{
     <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
               <li ><img src={kfintech} style={{width:"200px",height:'50px'}}/></li>
               <li style={{float:"right", margin: "7px"}} onClick={handleLogout}><Link>Logout</Link></li>
-              <li style={{float:"right", margin: "7px"}}><Link to="/users">Users</Link></li>
+              <li style={{float:"right", margin: "7px"}}><Link to="/getUsers">Users</Link></li>
 
       </ul>
       <div className="profile">
@@ -140,4 +157,4 @@ const onSubmit=(e)=>{
     );
   }
 
-export default Profile;
+export default CreateUser;

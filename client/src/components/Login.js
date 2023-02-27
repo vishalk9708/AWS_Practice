@@ -1,7 +1,7 @@
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import {Button, Form} from 'react-bootstrap';
-import UserPool from '../UserPool';
-import UserPool3 from '../Userpool3';
+import tenantUserPool from '../Tenant-userPool';
+import saasAdminPool from '../saasAdmin-userPool';
 import React,{useState} from 'react';
 import './Login.css'
 import {Link,useNavigate} from 'react-router-dom';
@@ -12,13 +12,13 @@ function Adminlogin() {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("")
     const navigate=useNavigate();
-    const onSubmit=(e)=>{
+    const onSubmit = (e) => {
         e.preventDefault();
-        const arr=email.split("@")
+        // const arr = email.split("@")
         localStorage.setItem("email",email)
-        const user=new CognitoUser({
+        const user = new CognitoUser({
             Username: email,
-            Pool: (arr[1]==="kfintech.com") ? UserPool3:UserPool
+            Pool: ( email === "v-parag.poddar@kfintech.com") ? saasAdminPool:tenantUserPool
         })
         const AuthDetails= new AuthenticationDetails({
             email: email,
@@ -29,19 +29,19 @@ function Adminlogin() {
                 console.log(data)
                 console.log("success")
                 swal("Login Successful", "", "success");
-                if(arr[1]!="kfintech.com")
+                if(email!=="v-parag.poddar@kfintech.com")
                 {
                 localStorage.setItem("tenant",data.idToken.payload['custom:tenantId'])
-                if(data.idToken.payload.profile=="Admin")
+                if(data.idToken.payload.profile === "Admin")
                 {
-                navigate('/createuser')
+                navigate('/createUser')
                 }
-                else if(data.idToken.payload.profile=="User")
+                else if(data.idToken.payload.profile === "User")
                 navigate('/userhome')
                 }    
                else
                {
-                navigate('/createtenant')
+                navigate('/createTenantAdmin')
                 }
                 
             },
