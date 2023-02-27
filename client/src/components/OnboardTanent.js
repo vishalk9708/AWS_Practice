@@ -5,26 +5,38 @@ import React,{useState} from 'react';
 import kfintech from '../img/kfintech.png'
 import swal from 'sweetalert';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import Select from 'react-select'
 import axios from 'axios';
+import './Onboard.css'
 var randomId = require('random-id');
 function OnboardTanent() {
     const [userpoolid,setuserpoolid]=useState();
-    const [app,setApp]=useState([]);
+    const [app,setApp]=useState(null);
     const [name,setName]=useState();
     const [code,setCode]=useState();
     const [domain,setDomain]=useState();
     const navigate=useNavigate();
-
+    const options=[
+      {value:"Digix", label:"Digix"},
+      {value:"IDM", label:"IDM"},
+      {value:"Quest", label:"Quest"},
+      {value:"DataUtility", label:"DataUtility"}
+    ]
+    // const [apps]= useState(options)
     const onSubmit=(e)=>{
       e.preventDefault();
-   
+      var apps=[]
+      for(let i=0;i<app.length;i++){
+        apps.push(app[i].value);
+      }
+      console.log(apps)
     const createTenant = async() => {
       const tenant = {
         name: name,
         domain: domain,
         tenant_id:randomId(8, 'aA0') ,
         code: code,
-        app: ["Digix","DataUtility"],
+        app: apps,
         userpoolid: "v098h"
       }
       await axios.post('http://localhost:8000/api/tenant', tenant)
@@ -60,14 +72,17 @@ function OnboardTanent() {
         <Form.Group className="mb-3" controlId="formBasicName">
                 <Form.Label>Tenant Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter Name" value={name} onChange={(e)=>setName(e.target.value)}/>
-                <Form.Text className="text-muted">
-                </Form.Text>
+                <Form.Text className="text-muted"></Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
                 <Form.Label>Domain Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter domain" value={domain} onChange={(e)=>setDomain(e.target.value)}/>
                 <Form.Text className="text-muted">
                 </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPhone">
+            <Form.Label>App Name</Form.Label> 
+            <Select defaultValue={app} onChange={setApp} options={options} isMulti={true}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
                 <Form.Label>Code</Form.Label>
