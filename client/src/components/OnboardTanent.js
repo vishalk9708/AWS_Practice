@@ -25,6 +25,8 @@ function OnboardTanent() {
     // const [apps]= useState(options)
     const onSubmit=(e)=>{
       e.preventDefault();
+      var tenantid=randomId(8, 'aA0');
+      localStorage.setItem("tenant",tenantid)
       var apps=[]
       for(let i=0;i<app.length;i++){
         apps.push(app[i].value);
@@ -34,10 +36,10 @@ function OnboardTanent() {
       const tenant = {
         name: name,
         domain: domain,
-        tenant_id:randomId(8, 'aA0') ,
+        tenant_id:tenantid,
         code: code,
         app: apps,
-        userpoolid: "v098h"
+        userpoolid: "ap-south-1_uAyKrPGVw"
       }
       await axios.post('http://localhost:8000/api/tenant', tenant)
            .then((res) => {

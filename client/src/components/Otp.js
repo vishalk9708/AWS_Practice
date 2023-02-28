@@ -3,7 +3,7 @@ import { Form,Button } from "react-bootstrap";
 import UserPool from "../Tenant-userPool";
 import { AuthenticationDetails, CognitoUser,Cog } from 'amazon-cognito-identity-js';
 import './Login.css'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Otp=()=>{
    const navigate=useNavigate();
    const [num,setNum]=useState();
@@ -11,7 +11,17 @@ const Otp=()=>{
 	Username: localStorage.getItem("email"),
 	Pool: UserPool,
 };
-
+const handleotp=(e)=>{
+  e.preventDefault();
+  var cognitoUser = new CognitoUser(userData);
+  cognitoUser.resendConfirmationCode(function(err, result) {
+	if (err) {
+		alert(err.message || JSON.stringify(err));
+		return;
+	}
+	console.log('call result: ' + result);
+});
+}
 const onSubmit=(e)=>{
     e.preventDefault();
 var cognitoUser = new CognitoUser(userData);
@@ -40,7 +50,10 @@ cognitoUser.confirmRegistration(num, true, function(err, result) {
             </Form.Group>
             <center><Button variant="primary" type="submit" >
                 Submit
-            </Button></center>
+            </Button>
+            <br/><br/>
+            <Button onClick={handleotp}>Send Otp again?</Button></center>
+            <br/>
             </Form>
     </div>
    )

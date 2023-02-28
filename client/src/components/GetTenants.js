@@ -35,13 +35,13 @@ function GetTenants(){
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
         </ul>
         <br/>
-        <center><h2>All Tenants of SaaS admin: </h2></center>
+        <center><h2>All Onboarded Tenants: </h2></center>
         <br/>
         <Table striped bordered hover size="sm">
         <thead>
             <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Tenant Name</th>
             <th>domain</th>
             <th>Apps</th>
             <th>Code</th>

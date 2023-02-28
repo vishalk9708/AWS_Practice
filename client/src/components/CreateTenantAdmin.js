@@ -27,11 +27,11 @@ function CreateTenantAdmin() {
     };
     var dataUserPool = {
         Name : 'custom:userPoolId',
-        Value : 'bcab72e'
+        Value : 'ap-south-1_uAyKrPGVw'
     };
     var dataTenant ={
       Name: 'custom:tenantId',
-      Value: ""
+      Value: localStorage.getItem("tenant")
     }
     var dataProfile ={
       Name: 'profile',
@@ -107,13 +107,13 @@ function CreateTenantAdmin() {
       <br/><br/>
         <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>Tenant Name</Form.Label>
+                <Form.Label>Admin Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter Name" value={name} onChange={(e)=>setName(e.target.value)}/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
-                <Form.Label>Tenant Mobile Number</Form.Label>
+                <Form.Label>Admin Mobile Number</Form.Label>
                 <Form.Control type="text" placeholder="Enter Phone Number" value={number} onChange={(e)=>setNumber(e.target.value)}/>
                 <Form.Text className="text-muted">
                 </Form.Text>
@@ -132,7 +132,7 @@ function CreateTenantAdmin() {
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
             <center><Button variant="primary" type="submit" >
-                Create Tenant
+                Create Tenant Admin
             </Button></center>
             <br/>
         </Form>

@@ -38,7 +38,7 @@ var dataPhoneNumber = {
 };
 var dataUserPool = {
     Name : 'custom:userPoolId',
-    Value : 'uid002'
+    Value : 'ap-south-1_uAyKrPGVw'
 };
 var dataTenant ={
   Name: 'custom:tenantId',
