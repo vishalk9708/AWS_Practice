@@ -8,6 +8,7 @@ import GetTenants from './components/GetTenants';
 import Otp from './components/Otp';
 import Createsaasadmin from './components/CreateSaasAdmin';
 import OnboardTanent from './components/OnboardTanent';
+import Passwordreset from './components/Passwordreset';
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
             <Route path='/otpverification' element={<Otp/>}/>
             <Route path='/createadmin' element={<Createsaasadmin/>}/>
             <Route path='/onboard' element={<OnboardTanent/>}/>
+            <Route path='/passwordreset' element={<Passwordreset/>}/>
         </Routes>
     </BrowserRouter>
     </>

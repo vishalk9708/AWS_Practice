@@ -14,11 +14,11 @@ function Adminlogin() {
     const navigate=useNavigate();
     const onSubmit = (e) => {
         e.preventDefault();
-        // const arr = email.split("@")
+        const arr = email.split("@")
         localStorage.setItem("email",email)
         const user = new CognitoUser({
             Username: email,
-            Pool: ( email === "v-parag.poddar@kfintech.com") ? saasAdminPool:tenantUserPool
+            Pool: arr[1]==="kfintech.com" ? saasAdminPool:tenantUserPool
         })
         const AuthDetails= new AuthenticationDetails({
             email: email,
@@ -29,7 +29,7 @@ function Adminlogin() {
                 console.log(data)
                 console.log("success")
                 swal("Login Successful", "", "success");
-                if(email!=="v-parag.poddar@kfintech.com")
+                if(arr[1]!=="kfintech.com")
                 {
                 localStorage.setItem("tenant",data.idToken.payload['custom:tenantId'])
                 if(data.idToken.payload.profile === "Admin")

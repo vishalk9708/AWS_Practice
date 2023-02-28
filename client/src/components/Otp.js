@@ -9,10 +9,27 @@ import swal from "sweetalert";
 const Otp=()=>{
    const navigate=useNavigate();
    const [num,setNum]=useState();
+   var email=localStorage.getItem("email");
+   var arr=email.split('@')
    var userData = {
 	Username: localStorage.getItem("email"),
-	Pool: localStorage.getItem("email")=="v-parag.poddar@kfintech.com"?SaasUserPool:TenantUserPool,
+	Pool: arr[1]=="kfintech.com"?SaasUserPool:TenantUserPool,
 };
+const sendCode=(e)=>{
+    var cognitoUser = new CognitoUser(userData);
+   cognitoUser.forgotPassword({
+        onSuccess(data){
+            console.log('OnSuccess:',data);
+        },
+        onFailure(err){
+            console.log('onFailure',err)
+        },
+        inputVerificationCode(data){
+            console.log('Input code',data)
+            navigate('/passwordreset');
+        }
+    });
+}
 const handleotp=(e)=>{
   e.preventDefault();
   var cognitoUser = new CognitoUser(userData);
@@ -35,7 +52,8 @@ cognitoUser.confirmRegistration(num, true, function(err, result) {
     else{
 	console.log("Otp verified");
     swal("Successfully verified!","","success")
-    navigate('/login')
+    // navigate('/login')
+    sendCode();
     }
 });
 }
