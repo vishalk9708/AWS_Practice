@@ -10,7 +10,7 @@ function GetTenants(){
     const navigate=useNavigate();
 
     const getUsers = async() => {
-        await axios.get('http://localhost:8000/api/users')
+        await axios.get('http://localhost:8000/api/tenants')
             .then(async (res) => {
                 setlistTenants(await res.data.data);
             })
@@ -42,8 +42,7 @@ function GetTenants(){
             <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
+            <th>domain</th>
             <th>Apps</th>
             <th>Code</th>
             <th>TenantId</th>
@@ -57,12 +56,11 @@ function GetTenants(){
                     <tr>
                         <td>{index+1}</td>
                         <td>{tenant.name}</td>
-                        <td>{tenant.email}</td>
-                        <td>{tenant.mobile}</td>
-                        <td>{JSON.stringify(tenant.apps)}</td>
+                        <td>{tenant.domain}</td>
+                        <td>{JSON.stringify(tenant.app)}</td>
                         <td>{tenant.code}</td>
                         <td>{tenant.tenant_id}</td>
-                        <td>{tenant.userPool_id}</td>
+                        <td>{tenant.userpoolid}</td>
                     </tr>
                     )
                 })
