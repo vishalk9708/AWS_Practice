@@ -42,13 +42,13 @@ function Adminlogin() {
                else
                {
                 navigate('/onboard')
-                }
+               }
                 
             },
             onFailure:(err)=>{
                 if(err.message==="User is not confirmed.")
                 {
-                navigate('/otpverification')
+                 navigate('/otpverification')
                 }
                 else{
                 console.error("onFailure",err)

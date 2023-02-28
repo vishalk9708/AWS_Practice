@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Form,Button } from "react-bootstrap";
-import UserPool from "../Tenant-userPool";
+import TenantUserPool from "../Tenant-userPool";
+import SaasUserPool from "../saasAdmin-userPool";
 import { AuthenticationDetails, CognitoUser,Cog } from 'amazon-cognito-identity-js';
 import './Login.css'
 import { Link, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 const Otp=()=>{
    const navigate=useNavigate();
    const [num,setNum]=useState();
    var userData = {
 	Username: localStorage.getItem("email"),
-	Pool: UserPool,
+	Pool: localStorage.getItem("email")=="v-parag.poddar@kfintech.com"?SaasUserPool:TenantUserPool,
 };
 const handleotp=(e)=>{
   e.preventDefault();
@@ -32,6 +34,7 @@ cognitoUser.confirmRegistration(num, true, function(err, result) {
 	}
     else{
 	console.log("Otp verified");
+    swal("Successfully verified!","","success")
     navigate('/login')
     }
 });

@@ -7,7 +7,7 @@ var params = {
   Parameters: [
     {
       ParameterKey: 'AuthName',
-      ParameterValue: 'parag'
+      ParameterValue: 'AxisMF'
     }
   ],
   TemplateBody: cloudformationTemplate 

@@ -8,7 +8,6 @@ import GetTenants from './components/GetTenants';
 import Otp from './components/Otp';
 import Createsaasadmin from './components/CreateSaasAdmin';
 import OnboardTanent from './components/OnboardTanent';
-
 function App() {
   return (
     <>
