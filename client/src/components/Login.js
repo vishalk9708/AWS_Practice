@@ -8,7 +8,7 @@ import {Link,useNavigate} from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
 
-function Adminlogin() {
+function Login() {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("")
     const navigate=useNavigate();
@@ -97,4 +97,4 @@ function Adminlogin() {
    )
 }
 
-export default Adminlogin;
+export default Login;
