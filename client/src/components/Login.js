@@ -7,6 +7,7 @@ import './Login.css'
 import {Link,useNavigate} from 'react-router-dom';
 import swal from 'sweetalert'
 import kfintech from '../img/kfintech.png'
+import userData from '../utils/getMetaData';
 
 function Login() {
     const [email,setEmail]=useState("");
@@ -29,21 +30,25 @@ function Login() {
                 console.log(data)
                 console.log("success")
                 swal("Login Successful", "", "success");
+                userData.isLoggedIn=true;
+
                 if(arr[1]!=="kfintech.com")
                 {
-                localStorage.setItem("tenant",data.idToken.payload['custom:tenantId'])
-                if(data.idToken.payload.profile === "Admin")
-                {
-                navigate('/createUser')
-                }
-                else if(data.idToken.payload.profile === "User")
-                navigate('/userhome')
+                    localStorage.setItem("tenant",data.idToken.payload['custom:tenantId'])
+                    if(data.idToken.payload.profile === "Admin")
+                    {
+                        navigate('/createUser')
+                        
+                    }
+                    else if(data.idToken.payload.profile === "User")
+                        navigate('/userhome')
+                        
                 }    
                else
                {
                 navigate('/onboard')
                }
-                
+                localStorage.setItem("userType",userData.userType)
             },
             onFailure:(err)=>{
                 if(err.message==="User is not confirmed.")

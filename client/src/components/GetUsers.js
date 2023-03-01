@@ -4,7 +4,8 @@ import swal from "sweetalert";
 import kfintech from '../img/kfintech.png'
 import Table from 'react-bootstrap/Table';
 import axios from 'axios'
-
+import userData from "../utils/getMetaData";
+import Error from './Error'
 const GetUsers = () => {
     const [listUsers, setlistUsers] = useState([]);
     const navigate=useNavigate();
@@ -26,8 +27,11 @@ const GetUsers = () => {
         swal("", "successfully logged out", "success")
         console.clear();
         localStorage.clear();
+        userData.isLoggedIn=false
+      userData.userType=""
         navigate('/login')
     }
+    if(userData.isLoggedIn){
  return(
      <>
         <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -70,6 +74,12 @@ const GetUsers = () => {
     </Table>
     </>
  )
+        }
+return(
+    <>
+    <Error/>
+    </>
+    )
 }
  
  export default GetUsers;

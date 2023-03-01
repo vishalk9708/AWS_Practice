@@ -8,6 +8,8 @@ import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import Select from 'react-select'
 import axios from 'axios';
 import './Onboard.css'
+import userData from '../utils/getMetaData';
+import Error from './Error'
 var randomId = require('random-id');
 function OnboardTanent() {
     const [userpoolid,setuserpoolid]=useState();
@@ -58,8 +60,11 @@ function OnboardTanent() {
       swal("", "successfully logged out", "success")
       console.clear();
       localStorage.clear();
+      userData.isLoggedIn=false
+      userData.userType=""
       navigate('/login')
   }
+  if(userData.isLoggedIn){
    return (
     <div>
       <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -102,6 +107,12 @@ function OnboardTanent() {
     </div>
     </div>
    )
+  }
+  return(
+    <>
+    <Error/>
+    </>
+  )
 }
 
 export default OnboardTanent;

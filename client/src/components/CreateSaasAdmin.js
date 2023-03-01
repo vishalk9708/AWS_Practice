@@ -7,6 +7,8 @@ import kfintech from '../img/kfintech.png'
 import swal from 'sweetalert';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import axios from 'axios';
+import userData from '../utils/getMetaData';
+import Error from './Error'
 
 function CreateSaaSAdmin() {
     const [email,setEmail]=useState();
@@ -35,9 +37,12 @@ function CreateSaaSAdmin() {
     const handleLogout = async() => {
       swal("", "successfully logged out", "success")
       console.clear();
+      userData.isLoggedIn=false
+      userData.userType=""
       localStorage.clear();
       navigate('/login')
   }
+  if(userData.isLoggedIn){
    return (
     <div>
       <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -68,6 +73,12 @@ function CreateSaaSAdmin() {
     </div>
     </div>
    )
+  }
+    return(
+      <>
+      <Error/>
+      </>
+    )
 }
 
 export default CreateSaaSAdmin;

@@ -7,6 +7,8 @@ import kfintech from '../img/kfintech.png'
 import UserPool from '../Tenant-userPool';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import axios from 'axios'
+import userData from '../utils/getMetaData';
+import Error from './Error'
 
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -114,8 +116,11 @@ const createUser = async() => {
       console.clear();
       swal("", "Logout successfully", "success");
       localStorage.clear();
+      userData.isLoggedIn=false
+      userData.userType=""
       navigate('/login')
   }
+  if(userData.isLoggedIn){
     return (
       <div>
     <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -156,6 +161,12 @@ const createUser = async() => {
       </div>
       </div>
     );
+      }
+      return(
+        <>
+        <Error/>
+        </>
+      )
   }
 
 export default CreateUser;

@@ -4,6 +4,8 @@ import swal from "sweetalert";
 import kfintech from '../img/kfintech.png'
 import Table from 'react-bootstrap/Table';
 import axios from 'axios'
+import userData from "../utils/getMetaData";
+import Error from './Error'
 
 function GetTenants(){
     const [listTenants, setlistTenants] = useState([]);
@@ -24,8 +26,11 @@ function GetTenants(){
         swal("", "successfully logged out", "success")
         console.clear();
         localStorage.clear();
+        userData.isLoggedIn=false
+      userData.userType=""
         navigate('/login')
     }
+    if(userData.isLoggedIn){
  return(
      <>
         <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -70,6 +75,12 @@ function GetTenants(){
     </Table>
     </>
  )
+        }
+return(
+    <>
+     <Error/>
+    </>
+    )
 }
  
  export default GetTenants;

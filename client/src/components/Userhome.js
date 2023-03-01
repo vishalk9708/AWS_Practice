@@ -3,14 +3,20 @@ import './Login.css'
 import {Link, useNavigate} from 'react-router-dom';
 import kfintech from '../img/kfintech.png'
 import swal from 'sweetalert';
+import userData from "../utils/getMetaData";
+import Error from './Error'
+
 const Userhome=()=>{
     const navigate=useNavigate();
     const handleLogout = async() => {
         swal("", "successfully logged out", "success")
         console.clear();
         localStorage.clear();
+        userData.isLoggedIn=false
+        userData.userType=""
         navigate('/login')
     }
+    if(userData.isLoggedIn){
     return(
         <>
         <ul style={{backgroundColor:"white",borderStyle: "outset"}}>
@@ -20,6 +26,12 @@ const Userhome=()=>{
 
         <center><h1>Welcome!</h1></center>
         </>
+    )
+    }
+return(
+    <>
+     <Error/>
+    </>
     )
 }
 
