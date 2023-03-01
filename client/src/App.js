@@ -9,6 +9,7 @@ import Otp from './components/Otp';
 import Createsaasadmin from './components/CreateSaasAdmin';
 import OnboardTanent from './components/OnboardTanent';
 import Passwordreset from './components/Passwordreset';
+import Userhome from './components/Userhome';
 function App() {
   return (
     <>
@@ -24,6 +25,7 @@ function App() {
             <Route path='/createadmin' element={<Createsaasadmin/>}/>
             <Route path='/onboard' element={<OnboardTanent/>}/>
             <Route path='/passwordreset' element={<Passwordreset/>}/>
+            <Route path='/userhome' element={<Userhome/>}/>
         </Routes>
     </BrowserRouter>
     </>

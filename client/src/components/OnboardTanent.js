@@ -18,9 +18,10 @@ function OnboardTanent() {
     const navigate=useNavigate();
     const options=[
       {value:"Digix", label:"Digix"},
-      {value:"IDM", label:"IDM"},
+      {value:"Data Engineering", label:"DataEngineering"},
       {value:"Quest", label:"Quest"},
-      {value:"DataUtility", label:"DataUtility"}
+      {value:"NPS", label:"NPS"},
+      {value:"Data Utility", label:"DataUtility"}
     ]
     // const [apps]= useState(options)
     const onSubmit=(e)=>{

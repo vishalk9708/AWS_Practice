@@ -45,20 +45,21 @@ const GetUsers = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Mobile</th>
-            <th>Password</th>
+            <th>User Type</th>
             <th>UserPoolId</th>
             </tr>
         </thead>
         <tbody>
             {
                 listUsers.map((user, index) => {
+                    if(user.tenant_id===localStorage.getItem("tenant"))
                     return (
                     <tr>
                         <td>{index+1}</td>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.mobile}</td>
-                        <td>{user.password}</td>
+                        <td>{user.userType}</td>
                         <td>{user.userPool_id}</td>
                     </tr>
                     )
