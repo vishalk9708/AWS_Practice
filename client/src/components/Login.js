@@ -40,8 +40,9 @@ function Login() {
                         navigate('/createUser')
                         
                     }
-                    else if(data.idToken.payload.profile === "User")
+                    else if(data.idToken.payload.profile === "User"){
                         navigate('/userhome')
+                    }
                         
                 }    
                else
