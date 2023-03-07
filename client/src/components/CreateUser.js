@@ -9,6 +9,7 @@ import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import axios from 'axios'
 import userData from '../utils/getMetaData';
 import Error from './Error'
+import { CognitoIdentityProviderClient, AdminCreateUserCommand } from "@aws-sdk/client-cognito-identity-provider";
 
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -18,15 +19,13 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 //   accessKeyId: 'xxxxxx',
 //   secretAccessKey: 'xxxxxxx',
 // } 
-const CreateUser=({ handleImages })=>{
+const CreateUser=()=>{
+ 
   const navigate=useNavigate();
   const [name,setName]=useState();
   const [number,setNumber]=useState();
   const [email,setEmail]=useState();
   const [password,setPassword]=useState();
-  // const randomId = function(length) {
-  //   return Math.random().toString(36).substring(2, length+2);
-  // };
 
   var attributeList = [];
   var dataName = {
@@ -50,30 +49,39 @@ var dataProfile ={
   Name: 'profile',
   Value: "User"
 }
+var dataemail={
+  Name: 'email',
+  Value: email
+}
 var attributeName = new CognitoUserAttribute(dataName);
 var attributePhoneNumber = new CognitoUserAttribute(dataPhoneNumber);
 var attributeUserPool = new CognitoUserAttribute(dataUserPool);
 var attributeTanent = new CognitoUserAttribute(dataTenant);
 var attributeProfile=new CognitoUserAttribute(dataProfile)
+var attributeEmail=new CognitoUserAttribute(dataemail)
 attributeList.push(attributeName);
 attributeList.push(attributePhoneNumber);
 attributeList.push(attributeTanent);
 attributeList.push(attributeUserPool);
 attributeList.push(attributeProfile)
+attributeList.push(attributeEmail)
 
 const onSubmit= (e)=>{
   e.preventDefault();
-  UserPool.signUp(email,password,attributeList,null,(err,data)=>{
-    if(err){
-      swal("", `${err.message}`, "warning")
-      console.log(err);
-      return;
-    }
-    else{
-        swal("", "user created in userPool", "success")
-        createUser();
-    }
-  })
+  const cognitoParams = {
+    UserPoolId: 'ap-south-1_6NACRTmIM',
+    DesiredDeliveryMediums: ['EMAIL'],
+    ForceAliasCreation: true,
+    MessageAction: 'SUPPRESS',
+    TemporaryPassword: password,
+    UserAttributes: attributeList,
+    Username: email
+  };
+  console.log(cognitoParams)
+  const client = new CognitoIdentityProviderClient({region:"ap-south-1", credentials:{accessKeyId:"AKIA3S5XP67EYKCKIQNJ",secretAccessKey:"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"}});
+  const command = new AdminCreateUserCommand(cognitoParams);
+  const response= client.send(command)
+  console.log(response)
 };
 
 const createUser = async() => {
@@ -95,23 +103,6 @@ const createUser = async() => {
             console.log("error", err);
        })
 }
-  // const uploadFiles=(e)=>{
-  //   e.preventDefault();
-  //   S3FileUpload.uploadFile(file, config)
-  //   .then((data) => 
-  //   {
-  //    console.log(data);
-  //    setimgUrl(data.location)
-  //    setEmail(localStorage.getItem(data.email))
-  //    swal("", "Image uploaded Successfully", "success");
-
-  //   })
-  //   .catch((err) => {
-  //     console.error(err)
-  //     swal("", `${err.message}`, "warning");
-  //   })
-
-  // }
   const handleLogout=()=>{
       console.clear();
       swal("", "Logout successfully", "success");

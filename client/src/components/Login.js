@@ -64,6 +64,20 @@ function Login() {
             },
             newPasswordRequired:(data)=>{
                 console.log("newPasswordReq",data);
+                console.log(user)
+                user.forgotPassword({
+                    onSuccess(data){
+                        console.log('OnSuccess:',data);
+                    },
+                    onFailure(err){
+                        console.log('onFailure',err)
+                    },
+                    inputVerificationCode(data){
+                        console.log('Input code',data)
+                        navigate('/passwordreset');
+                    }
+                });
+                navigate('/passwordreset')
             }
         })
         

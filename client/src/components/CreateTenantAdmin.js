@@ -9,6 +9,8 @@ import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import axios from 'axios';
 import userData from '../utils/getMetaData';
 import Error from './Error'
+import { CognitoIdentityProviderClient, AdminCreateUserCommand } from "@aws-sdk/client-cognito-identity-provider";
+
 
 function CreateTenantAdmin() {
     const [email,setEmail]=useState();
@@ -52,22 +54,20 @@ function CreateTenantAdmin() {
 
     const onSubmit=(e)=>{
       e.preventDefault();
-      UserPool.signUp(email,password,attributeList,null,(err,data)=>{
-        if(err){
-          swal("", `${err.message}`, "warning")
-          console.log(err);
-          return;
-        }
-        else{
-          console.log(data);
-          // cloudFormation();
-          createTenant();
-        }
-      })
-    //Hit cloudFormation for each tenant onboarding
-    // const cloudFormation = async() => {
-
-    // }
+      const cognitoParams = {
+        UserPoolId: dataUserPool.Value,
+        Username: email,
+        DesiredDeliveryMediums: ['EMAIL'],
+        ForceAliasCreation: true,
+        MessageAction: 'SUPPRESS',
+        TemporaryPassword: password,
+        UserAttributes: attributeList,
+      };
+      const client = new CognitoIdentityProviderClient({region:"ap-south-1", credentials:{accessKeyId:"AKIA3S5XP67EYKCKIQNJ",secretAccessKey:"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"}});
+      const command = new AdminCreateUserCommand(cognitoParams);
+      const response= client.send(command)
+      console.log(response)
+      }
     const createTenant = async() => {
       const user = {
         name: name,
@@ -86,9 +86,6 @@ function CreateTenantAdmin() {
                 console.log("error", err);
            })
     }
-
-    
-  }
 
     const handleLogout = async() => {
       swal("", "successfully logged out", "success")
