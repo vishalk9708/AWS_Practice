@@ -7,7 +7,7 @@ const NewAppName=(props)=>{
    const navigate=useNavigate();
    const [appname,setAppname]=useState();
    const onSubmit=()=>{
-
+    navigate('/getapplications')
    }
    return(
     <div className="login">
