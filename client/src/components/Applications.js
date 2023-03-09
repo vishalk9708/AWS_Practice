@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate,Link } from "react-router-dom";
 import swal from "sweetalert";
 import kfintech from '../img/kfintech.png'
@@ -7,41 +7,34 @@ import axios from 'axios'
 import userData from "../utils/getMetaData";
 import Error from './Error'
 import { Button } from "react-bootstrap";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+// import Popup from 'reactjs-popup';
+// import 'reactjs-popup/dist/index.css';
 
 const Applications = () => {
     const [listApps, setlistApps] = useState([]);
     const navigate=useNavigate();
 
-    const getApps = async() => {
-        await axios.get('http://localhost:8000/api/applications')
-            .then(async (res) => {
-                setlistApps(await res.data.data);
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/application')
+            .then((res) => {
+                setlistApps(res.data.data);
             })
             .catch((err)=>{
                 console.log('error', err);
             })
-        }
-    getApps();
-    const EditApp=async(app,e)=>{
-        await axios.post(`http://localhost:8000/api/application/${app}`)
-            .then(async (res) => {
-                // setlistApps(await res.data.data);
-                swal(app+'Edited',"","success")
-            })
-            .catch((err)=>{
-                console.log('error', err);
-            })
+    }, [])
+    
+    const EditApp=(app, e)=>{
+        e.preventDefault();
+        localStorage.setItem("app", app.appName);
+        localStorage.setItem("appClientId", app.appClientId);
+        navigate('/changeappname')
     }
       
-    const DeleteApp=(app,e)=>{
-        e.preventDefault();
-     
-        axios.delete(`http://localhost:8000/api/application/${app}`)
+    const DeleteApp=(appClientId)=>{
+        axios.delete(`http://localhost:8000/api/application/${appClientId}`)
             .then((res) => {
-                // setlistApps(res.data.data);
-                swal(app+'deleted',"","success")
+                swal('Deleted Successfully',"","success")
             })
             .catch((err)=>{
                 console.log('error', err);
@@ -72,6 +65,7 @@ const Applications = () => {
             <tr>
             <th>#</th>
             <th>Applications</th>
+            <th>AppClientId</th>
             <th></th>
             <th></th>
             </tr>
@@ -83,8 +77,9 @@ const Applications = () => {
                     <tr>
                         <td>{index+1}</td>
                         <td>{app.appName}</td>
-                        <td><Button onClick={localStorage.setItem("app",app.appName)}><Link to="/changeappname">Edit</Link></Button></td>
-                        <td><center><Button onClick={(e)=>DeleteApp(app.appName,e)}>Delete</Button></center></td>
+                        <td>{app.appClientId}</td>
+                        <td><center><Button onClick={(e)=>EditApp(app, e)}>Edit</Button></center></td>
+                        <td><center><Button onClick={(e)=>DeleteApp(app.appClientId, e)}>Delete</Button></center></td>
                     </tr>
                     )
                 })

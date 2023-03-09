@@ -3,12 +3,29 @@ import { Form,Button } from "react-bootstrap";
 import './Login.css'
 import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import axios from "axios";
+
 const NewAppName=(props)=>{
    const navigate=useNavigate();
    const [appname,setAppname]=useState();
-   const onSubmit=()=>{
-    navigate('/getapplications')
+
+   const onSubmit=(e)=>{
+        e.preventDefault();
+        const data = {
+            appClientId: localStorage.getItem("appClientId"),
+            appName: appname
+        }
+
+        axios.post(`http://localhost:8000/api/application`, data)
+                .then((res) => {
+                    swal(appname +' changed successfully',"","success")
+                })
+                .catch((err)=>{
+                    console.log('error', err);
+                })
+        navigate('/getapplications')
    }
+   
    return(
     <div className="login">
             <Form onSubmit={onSubmit}>

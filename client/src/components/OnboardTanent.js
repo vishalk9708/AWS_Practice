@@ -1,7 +1,7 @@
 import {Button, Form} from 'react-bootstrap';
 import {Link, useNavigate} from 'react-router-dom';
 import './createTenantAdmin.css'
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import kfintech from '../img/kfintech.png'
 import swal from 'sweetalert';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
@@ -12,7 +12,6 @@ import userData from '../utils/getMetaData';
 import Error from './Error'
 var randomId = require('random-id');
 function OnboardTanent() {
-    const [userpoolid,setuserpoolid]=useState();
     const [app,setApp]=useState(null);
     const [name,setName]=useState();
     const [code,setCode]=useState();
@@ -20,35 +19,34 @@ function OnboardTanent() {
     const [appname,setAppname]=useState();
     const [listapps,setlistApps]=useState([]);
     const navigate=useNavigate();
+    var options=[]
 
-    const setAppData = async() => {
-      await axios.get('http://localhost:8000/api/applications')
-          .then(async (res) => {
-              setlistApps(await res.data.data);
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/application')
+          .then((res) => {
+              setlistApps(res.data.data);
           })
           .catch((err)=>{
               console.log('error', err);
           })
-      }
-      setAppData();
-      // console.log(listapps)
-   
-    const options=[]
-    listapps.map((data)=>{
-      var obj={
-        value:"",
-        label:""
-      }
-      obj.value=data.appName;
-      obj.label=obj.value;
-      options.push(obj)
-    })
-    // console.log(options)
-    // const [apps]= useState(options)
+
+        listapps.map((data)=>{
+            var obj={
+              value:"",
+              label:""
+            }
+            obj.value=data.appName;
+            obj.label=obj.value;
+            options.push(obj)
+        })
+  }, []);
+
+    //onSubmit button handler -> inserting tenant data to db.
     const onSubmit=(e)=>{
       e.preventDefault();
       var tenantid=randomId(8, 'aA0');
       localStorage.setItem("tenant",tenantid)
+
       var apps=[]
       for(let i=0;i<app.length;i++){
         apps.push(app[i].value);
@@ -75,14 +73,15 @@ function OnboardTanent() {
     createTenant();  
   }
   const AddApp=(e)=>{
-    e.preventDefault();
+      e.preventDefault();
       const App = {
-        appName: appname
+        appName: appname,
+        appClientId: randomId(10)
       }
      axios.post('http://localhost:8000/api/application', App)
            .then((res) => {
                   swal("Application added successfully","", "success")
-                  navigate('/onboard')
+                  navigate('/getapplications')
            })
            .catch((err) => {
                 console.log("error", err);
