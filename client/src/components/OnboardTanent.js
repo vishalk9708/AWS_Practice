@@ -17,14 +17,33 @@ function OnboardTanent() {
     const [name,setName]=useState();
     const [code,setCode]=useState();
     const [domain,setDomain]=useState();
+    const [appname,setAppname]=useState();
+    const [listapps,setlistApps]=useState([]);
     const navigate=useNavigate();
-    const options=[
-      {value:"Digix", label:"Digix"},
-      {value:"Data Engineering", label:"DataEngineering"},
-      {value:"Quest", label:"Quest"},
-      {value:"NPS", label:"NPS"},
-      {value:"Data Utility", label:"DataUtility"}
-    ]
+
+    const setAppData = async() => {
+      await axios.get('http://localhost:8000/api/applications')
+          .then(async (res) => {
+              setlistApps(await res.data.data);
+          })
+          .catch((err)=>{
+              console.log('error', err);
+          })
+      }
+      setAppData();
+      // console.log(listapps)
+   
+    const options=[]
+    listapps.map((data)=>{
+      var obj={
+        value:"",
+        label:""
+      }
+      obj.value=data.appName;
+      obj.label=obj.value;
+      options.push(obj)
+    })
+    // console.log(options)
     // const [apps]= useState(options)
     const onSubmit=(e)=>{
       e.preventDefault();
@@ -55,7 +74,20 @@ function OnboardTanent() {
     }
     createTenant();  
   }
-
+  const AddApp=(e)=>{
+    e.preventDefault();
+      const App = {
+        appName: appname
+      }
+     axios.post('http://localhost:8000/api/application', App)
+           .then((res) => {
+                  swal("Application added successfully","", "success")
+                  navigate('/onboard')
+           })
+           .catch((err) => {
+                console.log("error", err);
+           })
+  }
     const handleLogout = async() => {
       swal("", "successfully logged out", "success")
       console.clear();
@@ -72,6 +104,7 @@ function OnboardTanent() {
             <li style={{float:"right"}} onClick={handleLogout}><Link>Logout</Link></li>
             <li style={{float:"right"}}><Link to='/createadmin'>Create Admin</Link></li>
             <li style={{float:"right"}}><Link to="/getTenants">Tenants</Link></li>
+            <li style={{float:"right"}}><Link to="/getapplications">Applications</Link></li>
       </ul>
     <div className="signup">
       <center><h1>Onboard Tenant </h1></center>
@@ -104,6 +137,21 @@ function OnboardTanent() {
             <br/>
         </Form>
        
+    </div>
+    <div className='signup'>
+    <center><h1>Onboard Application </h1></center>
+    <br/><br/>
+    <Form onSubmit={AddApp}>
+        <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Application Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter App Name" value={appname} onChange={(e)=>setAppname(e.target.value)}/>
+                <Form.Text className="text-muted"></Form.Text>
+            </Form.Group>
+            <center><Button variant="primary" type="submit" >
+                Add Application
+            </Button></center>
+            <br/>
+        </Form>
     </div>
     </div>
    )

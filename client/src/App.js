@@ -10,6 +10,7 @@ import Createsaasadmin from './components/CreateSaasAdmin';
 import OnboardTanent from './components/OnboardTanent';
 import Passwordreset from './components/Passwordreset';
 import Userhome from './components/Userhome';
+import Applications from './components/Applications';
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
             <Route path='/onboard' element={<OnboardTanent/>}/>
             <Route path='/passwordreset' element={<Passwordreset/>}/>
             <Route path='/userhome' element={<Userhome/>}/>
+            <Route path='/getapplications' element={<Applications/>}/>
         </Routes>
     </BrowserRouter>
     </>
