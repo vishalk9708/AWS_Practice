@@ -11,6 +11,7 @@ import OnboardTanent from './components/OnboardTanent';
 import Passwordreset from './components/Passwordreset';
 import Userhome from './components/Userhome';
 import Applications from './components/Applications';
+import NewAppName from './components/NewApp';
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
             <Route path='/passwordreset' element={<Passwordreset/>}/>
             <Route path='/userhome' element={<Userhome/>}/>
             <Route path='/getapplications' element={<Applications/>}/>
+            <Route path='/changeappname' element={<NewAppName/>}/>
         </Routes>
     </BrowserRouter>
     </>

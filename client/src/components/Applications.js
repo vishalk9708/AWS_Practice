@@ -83,7 +83,7 @@ const Applications = () => {
                     <tr>
                         <td>{index+1}</td>
                         <td>{app.appName}</td>
-                        <td><Link to="/changeappname" params={{app:app}}></Link></td>
+                        <td><Button onClick={localStorage.setItem("app",app.appName)}><Link to="/changeappname">Edit</Link></Button></td>
                         <td><center><Button onClick={(e)=>DeleteApp(app.appName,e)}>Delete</Button></center></td>
                     </tr>
                     )
